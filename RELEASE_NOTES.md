@@ -1,42 +1,38 @@
-# RedWizard KIT v0.1.0-alpha8
+# RedWizard KIT v0.1.0-beta1
 
-This alpha replaces the previous generic Infinity UI++ prompt workaround with a fix based on the user's actual installed `UI.MENU`.
+This is the first beta release of **RedWizard KIT**. It promotes the fully tested alpha8 implementation without changing gameplay mechanics.
 
-## Exact cause found
-The supplied Infinity UI++ UI file shows that the specialist-spell banner is rendered as:
+## Beta milestone
+The alpha phase is considered complete after real installation, character-generation and runtime-save testing confirmed the full Red Wizard implementation and the remaining Infinity UI++ compatibility issue.
 
-```lua
-text lua "dwFilterKitDesc(getUiString('SPECIALIST_SPELL_REQ'))"
-```
+The validated alpha8 installation used WeiDU 249.00 and installed both components successfully with zero errors and zero warnings. The installer also confirmed that the Infinity UI++ specialist-spell prompt compatibility patch was detected and applied.
 
-The `<SCHOOLTOKEN>` value is not resolved by that label. It is set earlier inside `rgChooseSpellsMenuOnOpen()`, where Infinity UI++ compares the current kit name against the stock specialist names and calls `setStringTokenLua()` for the corresponding school.
-
-The stock Conjurer branch is:
-
-```lua
-elseif currentKitName == rgGetGameEngineString(25320,25320,2179,2179) then
-    setStringTokenLua('<SCHOOLTOKEN>',getUiString('CONJURATION_SCHOOL_TOKEN'))
-```
-
-`S9REDWIZ` is mechanically a Conjurer but has its own kit name, so it never matches that stock-name branch. The spell-selection rule still works, but the UI token remains unresolved.
-
-## What changed
-- Removed the ineffective alpha7 label-level fallback.
-- Added a precise Infinity UI++ mapping at the actual token-resolution point in `rgChooseSpellsMenuOnOpen()`.
-- When the selected kit ID is `S9REDWIZ`, the UI now explicitly calls Infinity UI++'s own localized `CONJURATION_SCHOOL_TOKEN` path.
-- The original stock Abjurer/Conjurer/Diviner/etc. branches remain unchanged and continue handling every vanilla specialist normally.
-- The existing SCS/SFO `dwKitSpecLearnLine` path is retained for installations that actually provide that subsystem.
-- No gameplay mechanics changed.
-
-## Gameplay status
-Previous runtime save auditing already confirmed:
-- CHARNAME is correctly assigned `S9REDWIZ`.
-- Illusion remains available while the normal Conjurer Divination prohibition is preserved.
-- CHARNAME receives the normal specialist spell-slot progression plus the separate intrinsic Red Wizard +1 slot for spell levels 1-9.
-- Specialist Defense is present with the exact intended stack: +2 base vs Conjuration plus five +1 increments, for **+7 vs Conjuration at level 16+**.
+## Confirmed in-game
+- Red Wizard is selectable by CHARNAME.
+- Illusion spells remain available.
+- The normal Conjurer prohibition against Divination remains active.
+- The normal specialist spell-slot progression is preserved.
+- The Red Wizard receives its separate intrinsic +1 wizard spell slot for spell levels 1-9.
 - Spell Power reaches +5 caster levels at level 12+.
+- Specialist Defense is present as +2 base vs Conjuration plus five +1 increments, for **+7 vs Conjuration at level 16+**.
 - The repeating Enhanced Specialization aura is present.
-- Edwin is correctly assigned `S9REDWIZ`, keeps his existing amulet, and retains Illusion spells.
+- Edwin is correctly assigned `S9REDWIZ`, retains his existing amulet and keeps Illusion spells.
+
+## Infinity UI++ specialist prompt — verified fixed
+The exact `UI.MENU` used during testing showed that `<SCHOOLTOKEN>` is resolved inside `rgChooseSpellsMenuOnOpen()`, where stock specialist kits are identified by their stock names.
+
+Because `S9REDWIZ` has its own kit name, it did not enter the vanilla Conjurer branch even though it is mechanically Conjurer-based. RedWizard KIT now explicitly maps `S9REDWIZ` to Infinity UI++'s own localized `CONJURATION_SCHOOL_TOKEN` at that exact token-resolution point.
+
+In-game verification confirmed:
+- **Red Wizard:** `Select at least one conjuration spell to proceed.`
+- **Diviner:** `Select at least one divination spell to proceed.`
+- **Abjurer:** `Select at least one abjuration spell to proceed.`
+
+The Red Wizard fix therefore works without changing the normal specialist prompts.
+
+## Components
+- **0 — Red Wizard (Conjurer) kit**
+- **100 — Apply the Red Wizard kit to Edwin**
 
 ## Known external UI issue
 A class-name artifact such as `{K=0,C=1}` can be exposed by the interaction between SCS's class/kit signalling system and Infinity UI++. This is a known external UI-filtering issue and is intentionally not patched by RedWizard KIT.
@@ -44,7 +40,9 @@ A class-name artifact such as `{K=0,C=1}` can be exposed by the interaction betw
 ## Compatibility
 BG:EE, BG2:EE and EET.
 
-Do not install together with The Artisan's Kitpack NPC component #5102 (Red Wizard Mage Kit for Edwin).
+Do not install together with **The Artisan's Kitpack NPC component #5102 — Red Wizard Mage Kit for Edwin**.
+
+The release package is self-contained and uses the project-reference **WeiDU 249.00** executable.
 
 ## Credits
 Special thanks and full credit to **The Artisan / TheArtisanBG** for the original Red Wizard design, implementation and assets from **The Artisan's Kitpack**:
@@ -52,4 +50,4 @@ https://github.com/TheArtisanBG/The-Artisan-s-Kitpack
 
 `ADD_KIT_EX` is by Argent77.
 
-RedWizard KIT extraction, adaptation and compatibility work: **Sauler89**.
+RedWizard KIT extraction, adaptation, compatibility work and requested design changes: **Sauler89**.
