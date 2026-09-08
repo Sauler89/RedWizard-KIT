@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.1.0
+- Added optional component **200 — Install alternate portrait for Edwin**.
+- Uses the Edwin portrait displayed on The Artisan's Corner for The Artisan's Kitpack, with explicit credit to **The Artisan / TheArtisanBG**.
+- Added standard EE 24-bit BMP portrait variants: 210×330 Large, 169×266 Medium and 54×84 Small.
+- Installs both `EDWINL/M/S` and `NEDWINL/M/S`, covering BG:EE, BG2:EE and both portions of EET.
+- The portrait component overrides portrait resources directly and therefore works with existing saves without editing Edwin's CRE files.
+- The L/M/S resource approach is compatible with both the vanilla Enhanced Edition UI and Infinity UI++ without a UI-specific portrait patch.
+- Added the Edwin portrait as an image on the repository main README page.
+- Components 0 and 100 retain the validated v1.0.0 gameplay implementation unchanged apart from the mod version string.
+
 ## v1.0.0
 - First stable release of RedWizard KIT.
 - Promoted the fully validated `v0.1.0-beta1` implementation with no gameplay-mechanics changes.
