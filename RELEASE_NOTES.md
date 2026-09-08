@@ -1,18 +1,35 @@
-# RedWizard KIT v0.1.0-alpha7
+# RedWizard KIT v0.1.0-alpha8
 
-This alpha corrects the remaining Infinity UI++ specialist-spell prompt issue discovered by auditing a real alpha6 WeiDU installation log.
+This alpha replaces the previous generic Infinity UI++ prompt workaround with a fix based on the user's actual installed `UI.MENU`.
+
+## Exact cause found
+The supplied Infinity UI++ UI file shows that the specialist-spell banner is rendered as:
+
+```lua
+text lua "dwFilterKitDesc(getUiString('SPECIALIST_SPELL_REQ'))"
+```
+
+The `<SCHOOLTOKEN>` value is not resolved by that label. It is set earlier inside `rgChooseSpellsMenuOnOpen()`, where Infinity UI++ compares the current kit name against the stock specialist names and calls `setStringTokenLua()` for the corresponding school.
+
+The stock Conjurer branch is:
+
+```lua
+elseif currentKitName == rgGetGameEngineString(25320,25320,2179,2179) then
+    setStringTokenLua('<SCHOOLTOKEN>',getUiString('CONJURATION_SCHOOL_TOKEN'))
+```
+
+`S9REDWIZ` is mechanically a Conjurer but has its own kit name, so it never matches that stock-name branch. The spell-selection rule still works, but the UI token remains unresolved.
 
 ## What changed
-- Confirmed alpha6 installs both components successfully with zero WeiDU errors and zero warnings.
-- The alpha6 SCS/SFO-only `<SCHOOLTOKEN>` fix did not execute in the tested EET setup because `m_dw_ssd.lua` was not present.
-- Kept the SCS/SFO `dwKitSpecLearnLine` hook for installations where that subsystem exists.
-- Added an Infinity UI++ fallback that replaces only the specialist prompt expression and only when the selected kit is `S9REDWIZ`.
-- Red Wizard now receives the localized resolved prompt `Select at least one conjuration spell to proceed.` instead of the raw `<SCHOOLTOKEN>` template.
-- Every stock specialist mage and every other kit keeps Infinity UI++'s original prompt logic unchanged.
-- Added an explicit WeiDU message when the Infinity UI++ compatibility patch is detected and applied.
+- Removed the ineffective alpha7 label-level fallback.
+- Added a precise Infinity UI++ mapping at the actual token-resolution point in `rgChooseSpellsMenuOnOpen()`.
+- When the selected kit ID is `S9REDWIZ`, the UI now explicitly calls Infinity UI++'s own localized `CONJURATION_SCHOOL_TOKEN` path.
+- The original stock Abjurer/Conjurer/Diviner/etc. branches remain unchanged and continue handling every vanilla specialist normally.
+- The existing SCS/SFO `dwKitSpecLearnLine` path is retained for installations that actually provide that subsystem.
+- No gameplay mechanics changed.
 
 ## Gameplay status
-No gameplay mechanics changed from alpha6. Runtime save auditing already confirmed:
+Previous runtime save auditing already confirmed:
 - CHARNAME is correctly assigned `S9REDWIZ`.
 - Illusion remains available while the normal Conjurer Divination prohibition is preserved.
 - CHARNAME receives the normal specialist spell-slot progression plus the separate intrinsic Red Wizard +1 slot for spell levels 1-9.
