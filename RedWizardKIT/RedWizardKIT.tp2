@@ -1,6 +1,6 @@
 BACKUP ~weidu_external/backup/RedWizardKIT~
 AUTHOR ~Sauler89 / RedWizard KIT; original Red Wizard by The Artisan~
-VERSION ~v1.0.0~
+VERSION ~v1.1.0~
 
 ALWAYS
   INCLUDE ~RedWizardKIT/lib/a7#add_kit_ex.tpa~
@@ -116,3 +116,21 @@ PRINT @9
 
 // Component 100 patches game CRE resources. For reliable Edwin testing,
 // use a new game or a save made before Edwin was instantiated/recruited.
+
+BEGIN @12 DESIGNATED 200
+GROUP ~RedWizard KIT~
+REQUIRE_PREDICATE (GAME_IS ~BGEE BG2EE EET~) @6
+
+// Install both BG1-style and BG2-style Edwin portrait resrefs. This makes the
+// component work in BG:EE, BG2:EE and across both halves of EET, including
+// existing saves, without editing Edwin's CRE resources.
+//
+// L/M/S are supplied in standard EE sizes (210x330, 169x266, 54x84) as 24-bit
+// BMP files. Vanilla UI and Infinity UI++ can therefore use their normal
+// portrait resrefs without any UI-specific patch.
+COPY ~RedWizardKIT/portraits/EDWINL.BMP~ ~override/EDWINL.BMP~
+COPY ~RedWizardKIT/portraits/EDWINM.BMP~ ~override/EDWINM.BMP~
+COPY ~RedWizardKIT/portraits/EDWINS.BMP~ ~override/EDWINS.BMP~
+COPY ~RedWizardKIT/portraits/EDWINL.BMP~ ~override/NEDWINL.BMP~
+COPY ~RedWizardKIT/portraits/EDWINM.BMP~ ~override/NEDWINM.BMP~
+COPY ~RedWizardKIT/portraits/EDWINS.BMP~ ~override/NEDWINS.BMP~
