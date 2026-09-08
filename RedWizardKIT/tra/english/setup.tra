@@ -21,3 +21,4 @@ Note: Unlike the original Artisan's Kitpack implementation for Edwin, this versi
 @7 = ~The original Artisan's Kitpack Red Wizard component for Edwin (#5102) is already installed. Do not install both implementations.~
 @8 = ~The RedWizard KIT component must be installed first.~
 @9 = ~For reliable Edwin testing, start a new game or use a save from before Edwin was instantiated or recruited.~
+@10 = ~Select at least one conjuration spell to proceed.~
