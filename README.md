@@ -1,4 +1,4 @@
-# RedWizard KIT v0.1.0-alpha4
+# RedWizard KIT v0.1.0-alpha5
 
 **RedWizard KIT** extracts and adapts the Red Wizard (Conjurer) implementation from **The Artisan's Kitpack** into an independent WeiDU mod for BG:EE, BG2:EE and EET.
 
@@ -23,7 +23,7 @@ The main design change is deliberate: the Red Wizard keeps the normal Conjurer p
 - Assigns the Red Wizard kit to the same Edwin BGEE/BG2EE/EET CRE variants patched by the source mod.
 - Does **not** remove Illusion spells from Edwin.
 - Does **not** remove Edwin's scripted Mirror Image special ability.
-- Leaves the global `MISC89.ITM` untouched. A private clone (`S9RWAMU.ITM`) is created for Edwin and only its opcode 42 wizard-slot effects are removed, preventing duplicate Red Wizard spell slots while preserving compatibility with other item changes.
+- Does **not** modify, replace, clone or redirect `MISC89.ITM` or any other Edwin item.
 
 For reliable testing of component 100, start a new game or use a save made before Edwin has been instantiated/recruited.
 
@@ -45,9 +45,9 @@ The Red Wizard therefore remains Conjurer-based and retains Divination as the no
 
 ## Extra spell slots
 
-The source Edwin-only implementation provides the Red Wizard's additional +1 wizard spell slot per spell level through `MISC89.ITM`. RedWizard KIT moves this class benefit into `S9RWSLOT.SPL`, applied by the kit CLAB, so CHARNAME receives the same Red Wizard advantage.
+The original Artisan Edwin-only component does **not** merely patch Edwin's current amulet. It replaces `MISC89.ITM` with a custom 546-byte version containing nine opcode 42 effects that grant +1 wizard spell slot for spell levels 1–9.
 
-When component 100 is installed, the currently installed `MISC89.ITM` is cloned to `S9RWAMU.ITM`; only opcode 42 equipping effects are removed from that private clone and only Edwin's matching CRE item entries are redirected to it. The global `MISC89.ITM` remains untouched.
+RedWizard KIT moves this Red Wizard class benefit into `S9RWSLOT.SPL`, applied by the kit CLAB, so CHARNAME and Edwin receive the same intrinsic Red Wizard bonus. Because of that, component 100 leaves the game's currently installed Edwin amulet completely untouched.
 
 ## Compatibility
 
