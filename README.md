@@ -67,6 +67,8 @@ The package uses the exact project-reference **WeiDU 249.00** executable supplie
 3. Install component 0.
 4. Optionally install component 100 to apply the kit to Edwin.
 
+> **Source checkout note:** install from a GitHub Release rather than directly from a source checkout. Release packaging restores the pinned `ADD_KIT_EX` dependency and the binary projectile, then adds the project-reference WeiDU 249.00 executable. Release archives are self-contained.
+
 ## Credits
 
 - **The Artisan / [TheArtisanBG](https://github.com/TheArtisanBG)** — original Red Wizard design, implementation and binary assets from [The Artisan's Kitpack](https://github.com/TheArtisanBG/The-Artisan-s-Kitpack).
