@@ -1,4 +1,4 @@
-# RedWizard KIT v0.1.0-beta1
+# RedWizard KIT v1.0.0
 
 **RedWizard KIT** extracts and adapts the Red Wizard (Conjurer) implementation from **The Artisan's Kitpack** into an independent WeiDU mod for BG:EE, BG2:EE and EET.
 
@@ -75,10 +75,12 @@ A separate cosmetic issue where class names expose strings such as `{K=0,C=1}` i
 
 ## Validation status
 
-`v0.1.0-beta1` promotes the fully tested alpha8 code without gameplay changes. Validation performed before the beta promotion includes:
+`v1.0.0` is the first stable release. It promotes the fully validated `v0.1.0-beta1` code without gameplay changes.
+
+Validation completed before the stable release includes:
 
 - real WeiDU 249.00 installation on a heavily modded EET setup with components 0 and 100;
-- zero installer errors and zero warnings in the validated alpha8 installation;
+- zero installer errors and zero warnings in the validated installation;
 - CHARNAME character-generation and runtime-save inspection;
 - Edwin inspection from a real `BALDUR.gam` save;
 - Illusion availability and normal Conjurer Divination prohibition;
