@@ -1,16 +1,22 @@
-# RedWizard KIT v0.1.0-alpha4
+# RedWizard KIT v0.1.0-alpha5
 
-First repository-ready alpha release under the **RedWizard KIT** name.
+This alpha is based on the first real EET installation test of RedWizard KIT.
 
-## Highlights
-- Extracts the Red Wizard (Conjurer) implementation from The Artisan's Kitpack into an independent WeiDU mod.
-- Makes the Red Wizard available to CHARNAME.
-- Adds an optional component to apply the kit to Edwin.
-- Removes the additional Illusion prohibition while retaining the normal Conjurer prohibition on Divination.
-- Preserves Enhanced Specialization, Spell Power, Specialist Defense and the additional +1 wizard spell slot per spell level.
-- Keeps Edwin's Illusion spells and scripted Mirror Image.
-- Uses a private clone of Edwin's amulet to prevent duplicate Red Wizard spell slots without altering global `MISC89.ITM`.
-- Includes the project-reference WeiDU 249.00 executable.
+## What changed
+- Both components installed successfully in the supplied EET setup with **zero WeiDU errors and zero warnings**.
+- Fixed the Edwin amulet logic introduced in alpha4.
+- The original Artisan component replaces `MISC89.ITM` with a custom 546-byte amulet containing nine opcode 42 effects for the Red Wizard's extra wizard spell slots.
+- RedWizard KIT already provides those extra slots intrinsically through `S9RWSLOT.SPL`, so component 100 now leaves Edwin's currently installed amulet completely untouched.
+- Removed the `S9RWAMU.ITM` clone, opcode-42 deletion and CRE item redirection entirely.
+- Component 100 now only assigns `S9REDWIZ` to Edwin's supported CRE variants.
+- Edwin still keeps Illusion spells and scripted Mirror Image.
+
+## Core design
+- Playable Red Wizard (Conjurer) for CHARNAME.
+- Optional Edwin component.
+- Normal Conjurer prohibition on Divination is preserved.
+- The additional Illusion prohibition is removed.
+- Enhanced Specialization, Spell Power, Specialist Defense and +1 extra wizard spell slot per spell level are preserved.
 
 ## Compatibility
 BG:EE, BG2:EE and EET.
@@ -26,4 +32,4 @@ https://github.com/TheArtisanBG/The-Artisan-s-Kitpack
 RedWizard KIT extraction, adaptation and compatibility work: **Sauler89**.
 
 ## Testing status
-Static/resource QA has passed. This is still an alpha release until a full live installation/gameplay pass is completed on BG:EE/BG2:EE/EET.
+The WeiDU installation has now passed on a heavily modded EET installation. In-game CHARNAME/Edwin behavior should still be verified before promoting the project out of alpha status.
