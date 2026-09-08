@@ -1,0 +1,10 @@
+# WeiDU generated files
+SETUP-REDWIZARDKIT.DEBUG
+RedWizardKIT/backup/
+weidu.log
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*.tmp
