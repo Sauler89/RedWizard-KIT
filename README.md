@@ -1,4 +1,4 @@
-# RedWizard KIT v0.1.0-alpha5
+# RedWizard KIT v0.1.0-alpha6
 
 **RedWizard KIT** extracts and adapts the Red Wizard (Conjurer) implementation from **The Artisan's Kitpack** into an independent WeiDU mod for BG:EE, BG2:EE and EET.
 
@@ -45,9 +45,31 @@ The Red Wizard therefore remains Conjurer-based and retains Divination as the no
 
 ## Extra spell slots
 
-The original Artisan Edwin-only component does **not** merely patch Edwin's current amulet. It replaces `MISC89.ITM` with a custom 546-byte version containing nine opcode 42 effects that grant +1 wizard spell slot for spell levels 1–9.
+The original Artisan Edwin-only component replaces `MISC89.ITM` with a custom version containing nine opcode 42 effects that grant the Red Wizard's extra wizard spell slots.
 
-RedWizard KIT moves this Red Wizard class benefit into `S9RWSLOT.SPL`, applied by the kit CLAB, so CHARNAME and Edwin receive the same intrinsic Red Wizard bonus. Because of that, component 100 leaves the game's currently installed Edwin amulet completely untouched.
+RedWizard KIT moves this Red Wizard class benefit into `S9RWSLOT.SPL`, applied by the kit CLAB, so CHARNAME and Edwin receive the same intrinsic Red Wizard bonus. Component 100 therefore leaves Edwin's currently installed amulet completely untouched.
+
+A level-31 CHARNAME runtime-save audit confirmed the normal specialist slot progression separately from the nine intrinsic `S9RWSLOT` +1 effects. An Edwin runtime-save audit also confirmed that his native BG2 amulet slot bonuses remain intact while the Red Wizard slot bonus is applied separately.
+
+## Specialist Defense and Spell Power validation
+
+Runtime-save inspection of a level-31 Red Wizard confirmed:
+
+- `S9RWBASE`: opcode 346, +2 saves vs Conjuration;
+- five `S9RWDEF` opcode 346 effects, +1 each, from the level 1/4/8/12/16 progression;
+- total conditional saving-throw bonus at level 16+: **+7 vs Conjuration**;
+- `S9RWPWR`: opcode 191 with value 5 at level 31, matching the intended Spell Power progression;
+- `S9RWBASE` also carries the repeating `S9RWAUR` effect used by Enhanced Specialization.
+
+The conditional school-specific saving-throw modifiers are not expected to alter the generic Save vs. Spell number shown on the character record screen.
+
+## SCS / Infinity UI++ compatibility
+
+When SCS/SFO's externalized spell UI is installed, stock specialist mages are mapped to school-name strings by their hardcoded specialist IDs. Red Wizard is a modern custom kit, so alpha5 could display the raw `<SCHOOLTOKEN>` placeholder during spell selection even though spell availability itself was correct.
+
+Alpha6 registers a Red-Wizard-specific learn-line through SCS's own `dwKitSpecLearnLine` extension point when `m_dw_ssd.lua` is present. This is a display-only compatibility patch and does not change spell rules or availability.
+
+A separate cosmetic issue where class names expose strings such as `{K=0,C=1}` is a known SCS + Infinity UI++ UI-filtering problem and is intentionally not patched by RedWizard KIT.
 
 ## Compatibility
 
