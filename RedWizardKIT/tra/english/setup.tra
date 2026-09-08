@@ -22,3 +22,4 @@ Note: Unlike the original Artisan's Kitpack implementation for Edwin, this versi
 @8 = ~The RedWizard KIT component must be installed first.~
 @9 = ~For reliable Edwin testing, start a new game or use a save from before Edwin was instantiated or recruited.~
 @10 = ~Select at least one conjuration spell to proceed.~
+@11 = ~Infinity UI++ specialist spell prompt compatibility fix detected and applied.~
