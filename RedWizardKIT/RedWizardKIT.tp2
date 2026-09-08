@@ -1,6 +1,6 @@
 BACKUP ~weidu_external/backup/RedWizardKIT~
 AUTHOR ~Sauler89 / RedWizard KIT; original Red Wizard by The Artisan~
-VERSION ~v0.1.0-alpha8~
+VERSION ~v0.1.0-beta1~
 
 ALWAYS
   INCLUDE ~RedWizardKIT/lib/a7#add_kit_ex.tpa~
@@ -65,24 +65,19 @@ ACTION_IF FILE_EXISTS_IN_GAME ~m_dw_ssd.lua~ BEGIN
   BUT_ONLY
 END
 
-// Infinity UI++ path, audited against the actual installed UI.MENU:
-//
-// rgChooseSpellsMenuOnOpen() resolves <SCHOOLTOKEN> by comparing currentKitName
-// against the stock specialist kit names. S9REDWIZ is mechanically a Conjurer
-// but has its own kit name, so it never enters the stock Conjurer branch.
-//
-// Insert a kit-ID check immediately before the stock Abjurer/Conjurer mapping.
-// This preserves Infinity UI++'s original SPECIALIST_SPELL_REQ label and all
-// vanilla specialist handling while explicitly mapping S9REDWIZ to Conjuration.
+// Infinity UI++ path: SPECIALIST_SPELL_REQ contains <SCHOOLTOKEN>, but the
+// token itself is resolved earlier inside rgChooseSpellsMenuOnOpen(). Stock
+// specialist kits are recognized by their stock kit names; S9REDWIZ has its
+// own name and therefore needs an explicit Conjuration mapping. Insert that
+// mapping immediately before Infinity UI++'s stock Abjurer branch while leaving
+// every vanilla specialist branch unchanged.
 ACTION_IF FILE_EXISTS_IN_GAME ~UI.MENU~ BEGIN
-  ACTION_IF RESOURCE_CONTAINS ~UI.MENU~ ~function rgChooseSpellsMenuOnOpen()~ BEGIN
-    ACTION_IF RESOURCE_CONTAINS ~UI.MENU~ ~if currentKitName == rgGetGameEngineString(25319,25319,597,597) then~ BEGIN
+  ACTION_IF RESOURCE_CONTAINS ~UI.MENU~ ~rgChooseSpellsMenuOnOpen~ BEGIN
+    ACTION_IF RESOURCE_CONTAINS ~UI.MENU~ ~ABJURATION_SCHOOL_TOKEN~ BEGIN
       COPY_EXISTING ~UI.MENU~ ~override~
-        REPLACE_TEXTUALLY EXACT_MATCH
-          ~if currentKitName == rgGetGameEngineString(25319,25319,597,597) then~
-          ~if chargen.kit and currentChargenKit > 0 and chargen.kit[currentChargenKit].id == %kit_id% then
-            setStringTokenLua('<SCHOOLTOKEN>',getUiString('CONJURATION_SCHOOL_TOKEN'))
-          elseif currentKitName == rgGetGameEngineString(25319,25319,597,597) then~
+        REPLACE_TEXTUALLY
+          ~if currentKitName == rgGetGameEngineString(25319,25319,2178,2178) then%WNL%[ %TAB%]*setStringTokenLua('<SCHOOLTOKEN>',getUiString('ABJURATION_SCHOOL_TOKEN'))~
+          ~if chargen.kit and currentChargenKit > 0 and chargen.kit[currentChargenKit] and chargen.kit[currentChargenKit].id == %kit_id% then%WNL%	setStringTokenLua('<SCHOOLTOKEN>',getUiString('CONJURATION_SCHOOL_TOKEN'))%WNL%elseif currentKitName == rgGetGameEngineString(25319,25319,2178,2178) then%WNL%	setStringTokenLua('<SCHOOLTOKEN>',getUiString('ABJURATION_SCHOOL_TOKEN'))~
       BUT_ONLY
       PRINT @11
     END
