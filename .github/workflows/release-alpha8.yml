@@ -1,0 +1,88 @@
+name: Publish RedWizard KIT alpha8
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - RELEASE_NOTES.md
+      - .github/workflows/release-alpha8.yml
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Restore release-only vendored files
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p RedWizardKIT/spells RedWizardKIT/lib
+          base64 -d .github/vendor/S9INAREL.PRO.b64 > RedWizardKIT/spells/S9INAREL.PRO
+          curl -fL --retry 3 \
+            -o 'RedWizardKIT/lib/a7#add_kit_ex.tpa' \
+            'https://raw.githubusercontent.com/Argent77/A7-add_kit_ex/bdc79645895bd936c075a511c0e31722455159a3/a7-add_kit_ex/a7%23add_kit_ex.tpa'
+          echo "dfbc6157a0276be6070c5283aa015219197c13c18691dc3c61f339fb62d1d404  RedWizardKIT/spells/S9INAREL.PRO" | sha256sum -c -
+          grep -Fq 'ADD_KIT_EX_VERSION ~0.6.3~' 'RedWizardKIT/lib/a7#add_kit_ex.tpa'
+
+      - name: Obtain project-reference WeiDU 249.00
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fL --retry 3 \
+            -o /tmp/weidu249.zip \
+            https://github.com/WeiDUorg/weidu/releases/download/v249.00/WeiDU-Windows-249-amd64.zip
+          rm -rf /tmp/weidu249
+          mkdir -p /tmp/weidu249
+          unzip -q /tmp/weidu249.zip -d /tmp/weidu249
+          WEIDU_EXE="$(find /tmp/weidu249 -type f -iname 'weidu.exe' -print -quit)"
+          test -n "$WEIDU_EXE"
+          cp "$WEIDU_EXE" Setup-RedWizardKIT.exe
+          echo "ad70f5897a6d0ba4b0d226f845a9b14cf345f56cc9697ca8d05cac9fe4932c1a  Setup-RedWizardKIT.exe" | sha256sum -c -
+
+      - name: Generate payload checksums
+        shell: bash
+        run: |
+          set -euo pipefail
+          {
+            sha256sum Setup-RedWizardKIT.exe
+            find RedWizardKIT -type f -print0 | sort -z | xargs -0 sha256sum
+          } > SHA256SUMS.txt
+
+      - name: Build release archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf dist
+          mkdir -p dist
+          zip -r -9 "dist/RedWizard-KIT-v0.1.0-alpha8.zip" \
+            Setup-RedWizardKIT.exe \
+            SHA256SUMS.txt \
+            README.md \
+            CHANGELOG.md \
+            ATTRIBUTION.md \
+            RedWizardKIT
+          sha256sum "dist/RedWizard-KIT-v0.1.0-alpha8.zip"
+
+      - name: Create GitHub prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: v0.1.0-alpha8
+        shell: bash
+        run: |
+          set -euo pipefail
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release $TAG already exists; nothing to do."
+            exit 0
+          fi
+          gh release create "$TAG" \
+            "dist/RedWizard-KIT-v0.1.0-alpha8.zip" \
+            --title "RedWizard KIT v0.1.0-alpha8" \
+            --notes-file RELEASE_NOTES.md \
+            --prerelease \
+            --target "$GITHUB_SHA"
