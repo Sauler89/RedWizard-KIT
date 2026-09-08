@@ -1,0 +1,6 @@
+* text=auto
+*.SPL binary
+*.EFF binary
+*.PRO binary
+*.ITM binary
+*.exe binary
