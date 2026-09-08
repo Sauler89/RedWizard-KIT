@@ -1,4 +1,4 @@
-# RedWizard KIT v0.1.0-alpha6
+# RedWizard KIT v0.1.0-beta1
 
 **RedWizard KIT** extracts and adapts the Red Wizard (Conjurer) implementation from **The Artisan's Kitpack** into an independent WeiDU mod for BG:EE, BG2:EE and EET.
 
@@ -65,11 +65,27 @@ The conditional school-specific saving-throw modifiers are not expected to alter
 
 ## SCS / Infinity UI++ compatibility
 
-When SCS/SFO's externalized spell UI is installed, stock specialist mages are mapped to school-name strings by their hardcoded specialist IDs. Red Wizard is a modern custom kit, so alpha5 could display the raw `<SCHOOLTOKEN>` placeholder during spell selection even though spell availability itself was correct.
+Infinity UI++ displays the specialist-spell requirement through `SPECIALIST_SPELL_REQ`, whose `<SCHOOLTOKEN>` is resolved inside `rgChooseSpellsMenuOnOpen()`. Stock specialist kits are recognized by their stock kit names. `S9REDWIZ` is mechanically a Conjurer but has its own kit name, so without a compatibility mapping the UI can display the raw `<SCHOOLTOKEN>` placeholder even though spell availability itself is correct.
 
-Alpha6 registers a Red-Wizard-specific learn-line through SCS's own `dwKitSpecLearnLine` extension point when `m_dw_ssd.lua` is present. This is a display-only compatibility patch and does not change spell rules or availability.
+RedWizard KIT explicitly maps `S9REDWIZ` to Infinity UI++'s own localized `CONJURATION_SCHOOL_TOKEN` at that token-resolution point. The fix was audited against the actual installed `UI.MENU` and verified in-game: Red Wizard displays `Select at least one conjuration spell to proceed.`, while stock specialists such as Abjurer and Diviner continue displaying their own correct school names.
+
+When SCS/SFO's externalized spell UI (`m_dw_ssd.lua`) is present, RedWizard KIT also supports its `dwKitSpecLearnLine` extension point.
 
 A separate cosmetic issue where class names expose strings such as `{K=0,C=1}` is a known SCS + Infinity UI++ UI-filtering problem and is intentionally not patched by RedWizard KIT.
+
+## Validation status
+
+`v0.1.0-beta1` promotes the fully tested alpha8 code without gameplay changes. Validation performed before the beta promotion includes:
+
+- real WeiDU 249.00 installation on a heavily modded EET setup with components 0 and 100;
+- zero installer errors and zero warnings in the validated alpha8 installation;
+- CHARNAME character-generation and runtime-save inspection;
+- Edwin inspection from a real `BALDUR.gam` save;
+- Illusion availability and normal Conjurer Divination prohibition;
+- extra spell-slot progression;
+- Spell Power and Specialist Defense effects;
+- Enhanced Specialization aura;
+- Infinity UI++ specialist-school prompt for Red Wizard and stock specialists.
 
 ## Compatibility
 
