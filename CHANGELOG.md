@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.1.0-beta1
+- Promoted the fully validated alpha8 code to the first beta with no gameplay-mechanics changes.
+- Confirmed the alpha8 Infinity UI++ fix in-game: Red Wizard now displays `Select at least one conjuration spell to proceed.` instead of the raw `<SCHOOLTOKEN>` placeholder.
+- Confirmed stock specialist prompts remain correct after the Red Wizard UI patch, including Diviner (`divination`) and Abjurer (`abjuration`).
+- Confirmed the real alpha8 WeiDU installation log contains zero errors and zero warnings, installs both components successfully, registers `S9REDWIZ`, and reports the Infinity UI++ compatibility patch as applied.
+- Retained all previously runtime-validated mechanics: Illusion availability, normal Conjurer Divination prohibition, intrinsic extra spell slots, Spell Power, Specialist Defense, Enhanced Specialization aura, and Edwin integration.
+- `RedWizardKIT.tp2` is identical to the validated alpha8 implementation except for the version string.
+
 ## v0.1.0-alpha8
 - Audited the user's actual installed `UI.MENU` instead of relying on upstream assumptions.
 - Identified the exact Infinity UI++ code path that resolves `<SCHOOLTOKEN>`: `rgChooseSpellsMenuOnOpen()` compares `currentKitName` against the stock specialist kit names and calls `setStringTokenLua()` for each vanilla school.
