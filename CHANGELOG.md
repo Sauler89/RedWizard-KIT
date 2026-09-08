@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.1.0-alpha8
+- Audited the user's actual installed `UI.MENU` instead of relying on upstream assumptions.
+- Identified the exact Infinity UI++ code path that resolves `<SCHOOLTOKEN>`: `rgChooseSpellsMenuOnOpen()` compares `currentKitName` against the stock specialist kit names and calls `setStringTokenLua()` for each vanilla school.
+- Confirmed the Red Wizard reaches the specialist-spell requirement correctly but never enters the stock Conjurer-name branch because `S9REDWIZ` has its own kit name.
+- Replaced the ineffective alpha7 label-level fallback with a precise kit-ID mapping inserted immediately before Infinity UI++'s stock specialist mapping.
+- `S9REDWIZ` now explicitly maps to `CONJURATION_SCHOOL_TOKEN` through Infinity UI++'s own localized `getUiString()` path.
+- Stock specialist mages and all other kits retain the original Infinity UI++ logic unchanged.
+- The patch is keyed to the actual `rgChooseSpellsMenuOnOpen()` / Abjurer mapping found in the supplied `UI.MENU`, and is applied only when that exact structure is present.
+- No gameplay mechanics, spell availability, CLAB progression, Edwin handling, spell slots, Spell Power or Specialist Defense were changed.
+
 ## v0.1.0-alpha7
 - Audited the real alpha6 WeiDU DEBUG: both components install successfully with zero errors and zero warnings.
 - Discovered that the alpha6 `<SCHOOLTOKEN>` compatibility branch did not execute in the tested EET setup because `m_dw_ssd.lua` is not installed there.
