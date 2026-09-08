@@ -1,0 +1,23 @@
+@0 = ~Red Wizard (Conjurer)~
+@1 = ~red wizard~
+@2 = ~RED WIZARD: The Red Wizards are the masters of Thay, the conquerors of that land's native Rashemi, and the would-be magical overlords of Faerûn. They focus on a school of magic more intently than any specialist, achieving incredible mastery of magic within a very narrow focus. Seen as cruel and evil tyrants by people across Toril, a few choose to leave their region, assume secret identities, and practice magic without having to worry about political alliances and possible slave uprisings.
+
+Advantages:
+– Enhanced Specialization: Upon becoming a Red Wizard, a character increases his devotion to Conjuration, gaining various bonuses toward that school.
+– All enemies within a 30-ft. radius of the Red Wizard suffer a -4 penalty when making Saving Throws against Conjuration spells from all sources, in place of the specialist's normal modifier on spells cast.
+– May cast one extra spell per level in addition to the bonus gained by specialization.
+– Spell Power: The Red Wizard's arcane spells are cast as though one level higher than their actual level. This bonus increases by +1 at 3rd, 6th, 9th and 12th level.
+– Specialist Defense: The Red Wizard gains an additional +1 bonus to Saving Throws against Conjuration spells. This bonus increases by +1 at 4th, 8th, 12th and 16th level.
+
+Disadvantages:
+– Must be of any non-good alignment.
+– As a Conjurer, cannot learn or cast Divination spells.
+
+Note: Unlike the original Artisan's Kitpack implementation for Edwin, this version does not impose Illusion as an additional prohibited school.~
+@3 = ~RED WIZARD: A highly specialized Conjurer of Thay. This version preserves Enhanced Specialization but does not impose Illusion as an additional prohibited school.~
+@4 = ~RedWizard KIT: Red Wizard (Conjurer) kit~
+@5 = ~RedWizard KIT: Apply the Red Wizard kit to Edwin~
+@6 = ~This component requires BG:EE, BG2:EE, or EET.~
+@7 = ~The original Artisan's Kitpack Red Wizard component for Edwin (#5102) is already installed. Do not install both implementations.~
+@8 = ~The RedWizard KIT component must be installed first.~
+@9 = ~For reliable Edwin testing, start a new game or use a save from before Edwin was instantiated or recruited.~
