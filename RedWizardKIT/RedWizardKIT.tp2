@@ -1,6 +1,6 @@
 BACKUP ~weidu_external/backup/RedWizardKIT~
 AUTHOR ~Sauler89 / RedWizard KIT; original Red Wizard by The Artisan~
-VERSION ~v0.1.0-alpha6~
+VERSION ~v0.1.0-alpha7~
 
 ALWAYS
   INCLUDE ~RedWizardKIT/lib/a7#add_kit_ex.tpa~
@@ -50,12 +50,8 @@ LAF ADD_KIT_EX
     kit_id
 END
 
-// SCS/SFO's externalized spell UI maps the eight stock specialist-mage kit
-// IDs (22-29) to their school names. S9REDWIZ is a modern custom kit, so
-// without an explicit custom learn-line SCS falls back to the raw
-// "<SCHOOLTOKEN>" template. Register only this kit's display string through
-// SCS's own dwKitSpecLearnLine extension point when that system is present.
-// This does not change spell availability or specialist requirements.
+// SCS/SFO path: if its externalized spell UI is present, register the custom
+// Red Wizard prompt through SCS's own dwKitSpecLearnLine extension point.
 ACTION_IF FILE_EXISTS_IN_GAME ~m_dw_ssd.lua~ BEGIN
   OUTER_SET s9rw_scs_learn_line = RESOLVE_STR_REF(@10)
   COPY_EXISTING ~m_dw_ssd.lua~ ~override~
@@ -67,6 +63,24 @@ ACTION_IF FILE_EXISTS_IN_GAME ~m_dw_ssd.lua~ BEGIN
       WRITE_ASCIIE s9rw_scs_pos ~%s9rw_scs_patch%~ (s9rw_scs_len)
     END
   BUT_ONLY
+END
+
+// Infinity UI++ path: the UI uses SPECIALIST_SPELL_REQ as a language template
+// containing <SCHOOLTOKEN>. Stock specialist mage kits receive a school token,
+// but a modern custom kit such as S9REDWIZ does not. Replace only this one UI
+// label with a conditional expression: Red Wizard gets a fully resolved,
+// localized Conjuration prompt; every other kit keeps Infinity UI++'s original
+// expression. This is display-only and does not change spell-selection rules.
+ACTION_IF FILE_EXISTS_IN_GAME ~UI.MENU~ BEGIN
+  ACTION_IF RESOURCE_CONTAINS ~UI.MENU~ ~SPECIALIST_SPELL_REQ~ BEGIN
+    OUTER_SET s9rw_ui_learn_line = RESOLVE_STR_REF(@10)
+    COPY_EXISTING ~UI.MENU~ ~override~
+      REPLACE_TEXTUALLY EXACT_MATCH
+        ~text lua "t('SPECIALIST_SPELL_REQ')"~
+        ~text lua "((currentChargenKit and chargen.kit[currentChargenKit] and chargen.kit[currentChargenKit].id == %kit_id%) and Infinity_FetchString(%s9rw_ui_learn_line%) or t('SPECIALIST_SPELL_REQ'))"~
+    BUT_ONLY
+    PRINT @11
+  END
 END
 
 BEGIN @5 DESIGNATED 100
