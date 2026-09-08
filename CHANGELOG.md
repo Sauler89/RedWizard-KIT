@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.1.0-alpha7
+- Audited the real alpha6 WeiDU DEBUG: both components install successfully with zero errors and zero warnings.
+- Discovered that the alpha6 `<SCHOOLTOKEN>` compatibility branch did not execute in the tested EET setup because `m_dw_ssd.lua` is not installed there.
+- Kept the SCS/SFO `dwKitSpecLearnLine` hook for installations where that subsystem is actually present.
+- Added a direct Infinity UI++ fallback that patches only the `SPECIALIST_SPELL_REQ` label and only changes its text when the currently selected kit is `S9REDWIZ`.
+- All stock specialist mages and all other kits continue using Infinity UI++'s original prompt logic unchanged.
+- Added an explicit WeiDU diagnostic message when the Infinity UI++ fallback is detected and applied, making the next DEBUG easy to verify.
+- No gameplay mechanics, spell availability, CLAB progression, Edwin handling, spell slots, Spell Power or Specialist Defense were changed.
+
 ## v0.1.0-alpha6
 - Audited a real level-31 Red Wizard `.CHR` and Edwin directly from a supplied `BALDUR.gam` save.
 - Confirmed CHARNAME has the normal specialist spell-slot progression plus the separate nine-level `S9RWSLOT` Red Wizard bonus.
@@ -7,7 +16,7 @@
 - Confirmed level-31 Spell Power is present as opcode 191 with value +5 and the Enhanced Specialization repeating aura is present.
 - Confirmed Edwin is assigned `S9REDWIZ`, keeps `MISC89`, keeps his native BG2 amulet slot bonuses, and separately receives the Red Wizard slot bonus.
 - Confirmed Edwin retains all seven Illusion spells removed by the original Artisan component, including memorized Illusion spells.
-- Fixed the raw `<SCHOOLTOKEN>` text shown by SCS/SFO's externalized spell UI for the custom Red Wizard kit by registering a localized `dwKitSpecLearnLine` entry when that system is installed.
+- Added an SCS/SFO `dwKitSpecLearnLine` compatibility path for the raw `<SCHOOLTOKEN>` prompt; alpha7 extends this with the required Infinity UI++ fallback.
 - The known `{K=...,C=...}` class-name artifact from SCS + Infinity UI++ is external to RedWizard KIT and is intentionally not patched here.
 
 ## v0.1.0-alpha5
