@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.0.0
+- First stable release of RedWizard KIT.
+- Promoted the fully validated `v0.1.0-beta1` implementation with no gameplay-mechanics changes.
+- Stable release retains the verified Infinity UI++ Conjuration school-token mapping for `S9REDWIZ`.
+- Stable release retains the validated Red Wizard mechanics: Illusion available, normal Conjurer Divination prohibition, intrinsic extra spell slots, Spell Power, Specialist Defense, Enhanced Specialization aura, and Edwin integration.
+- Stable release retains the validated WeiDU 249.00 packaging pipeline and self-contained release archive.
+- `RedWizardKIT.tp2` is identical to `v0.1.0-beta1` except for the version string.
+
 ## v0.1.0-beta1
 - Promoted the fully validated alpha8 code to the first beta with no gameplay-mechanics changes.
 - Confirmed the alpha8 Infinity UI++ fix in-game: Red Wizard now displays `Select at least one conjuration spell to proceed.` instead of the raw `<SCHOOLTOKEN>` placeholder.
