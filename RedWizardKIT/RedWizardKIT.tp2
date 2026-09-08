@@ -1,6 +1,6 @@
 BACKUP ~weidu_external/backup/RedWizardKIT~
 AUTHOR ~Sauler89 / RedWizard KIT; original Red Wizard by The Artisan~
-VERSION ~v0.1.0-alpha4~
+VERSION ~v0.1.0-alpha5~
 
 ALWAYS
   INCLUDE ~RedWizardKIT/lib/a7#add_kit_ex.tpa~
@@ -56,46 +56,24 @@ REQUIRE_PREDICATE (GAME_IS ~BGEE BG2EE EET~) @6
 REQUIRE_COMPONENT ~Setup-RedWizardKIT.tp2~ ~0~ @8
 FORBID_COMPONENT ~Setup-ArtisansKitpack_npc.tp2~ ~5102~ @7
 
-OUTER_SET s9rwamu_ready = 0
-ACTION_IF FILE_EXISTS_IN_GAME ~MISC89.ITM~ BEGIN
-  COPY_EXISTING ~MISC89.ITM~ ~override/S9RWAMU.ITM~
-    LPF DELETE_ITEM_EQEFFECT
-      INT_VAR
-        opcode_to_delete = 42
-    END
-  BUT_ONLY
-  OUTER_SET s9rwamu_ready = 1
-END
-
 ACTION_FOR_EACH edwin IN edwin edwin2 edwin4 edwin6 edwin7 edwin9 edwin11 edwin12 edwin13 edwin15 BEGIN
   ACTION_IF FILE_EXISTS_IN_GAME ~%edwin%.cre~ BEGIN
     COPY_EXISTING ~%edwin%.cre~ ~override~
       WRITE_SHORT 0x246 (IDS_OF_SYMBOL (~kit~ ~S9REDWIZ~))
-
-      // If Edwin carries the canonical MISC89 amulet, redirect only his item
-      // entry to the private no-slot clone. BGEE/BG2EE/EET use CRE V1.0 here.
-      PATCH_IF (s9rwamu_ready) BEGIN
-        READ_ASCII 0x4 cre_version (4)
-        PATCH_IF (~%cre_version%~ STRING_EQUAL_CASE ~V1.0~) BEGIN
-          READ_LONG 0x2bc items_offset
-          READ_LONG 0x2c0 items_count
-          FOR (i = 0; i < items_count; ++i) BEGIN
-            READ_ASCII (items_offset + (i * 0x14)) item_resref (8) NULL
-            PATCH_IF (~%item_resref%~ STRING_EQUAL_CASE ~MISC89~) BEGIN
-              WRITE_ASCII (items_offset + (i * 0x14)) ~S9RWAMU~ #8
-            END
-          END
-        END
-      END
     BUT_ONLY
   END
 END
 
+// The original Artisan component replaced MISC89.ITM with a custom 546-byte
+// amulet containing nine opcode 42 effects (+1 wizard slot for levels 1-9).
+// RedWizard KIT moves that class benefit into S9RWSLOT.SPL instead, so Edwin's
+// currently installed amulet must remain completely untouched.
+//
 // Intentionally DO NOT remove Edwin's Illusion spells and DO NOT strip
 // AddSpecialAbility("SPWI212") from EDWIN.BCS. Illusion is no longer an
 // additional prohibited school in this version.
 
 PRINT @9
 
-// Component 100 patches game resources (CRE/ITM). For reliable Edwin testing,
+// Component 100 patches game CRE resources. For reliable Edwin testing,
 // use a new game or a save made before Edwin was instantiated/recruited.
