@@ -1,6 +1,6 @@
 BACKUP ~weidu_external/backup/RedWizardKIT~
 AUTHOR ~Sauler89 / RedWizard KIT; original Red Wizard by The Artisan~
-VERSION ~v0.1.0-alpha5~
+VERSION ~v0.1.0-alpha6~
 
 ALWAYS
   INCLUDE ~RedWizardKIT/lib/a7#add_kit_ex.tpa~
@@ -48,6 +48,25 @@ LAF ADD_KIT_EX
     clab_path = ~override/S9REDWIZ.2da~
   RET
     kit_id
+END
+
+// SCS/SFO's externalized spell UI maps the eight stock specialist-mage kit
+// IDs (22-29) to their school names. S9REDWIZ is a modern custom kit, so
+// without an explicit custom learn-line SCS falls back to the raw
+// "<SCHOOLTOKEN>" template. Register only this kit's display string through
+// SCS's own dwKitSpecLearnLine extension point when that system is present.
+// This does not change spell availability or specialist requirements.
+ACTION_IF FILE_EXISTS_IN_GAME ~m_dw_ssd.lua~ BEGIN
+  OUTER_SET s9rw_scs_learn_line = RESOLVE_STR_REF(@10)
+  COPY_EXISTING ~m_dw_ssd.lua~ ~override~
+    PATCH_IF (INDEX_BUFFER(~dwKitSpecLearnLine~) >= 0) BEGIN
+      SPRINT s9rw_scs_patch ~%WNL%dwKitSpecLearnLine[%kit_id%]=%s9rw_scs_learn_line%%WNL%~
+      SET s9rw_scs_pos = BUFFER_LENGTH
+      SET s9rw_scs_len = STRING_LENGTH ~%s9rw_scs_patch%~
+      INSERT_BYTES s9rw_scs_pos s9rw_scs_len
+      WRITE_ASCIIE s9rw_scs_pos ~%s9rw_scs_patch%~ (s9rw_scs_len)
+    END
+  BUT_ONLY
 END
 
 BEGIN @5 DESIGNATED 100
