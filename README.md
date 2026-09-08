@@ -1,8 +1,21 @@
-# RedWizard KIT v1.0.0
+# RedWizard KIT v1.1.0
 
 **RedWizard KIT** extracts and adapts the Red Wizard (Conjurer) implementation from **The Artisan's Kitpack** into an independent WeiDU mod for BG:EE, BG2:EE and EET.
 
 The main design change is deliberate: the Red Wizard keeps the normal Conjurer prohibited school (**Divination**) but **does not gain Illusion as an additional prohibited school**.
+
+## Edwin alternate portrait
+
+![Edwin alternate portrait by The Artisan](https://raw.githubusercontent.com/TheArtisanBG/The-Artisans-Corner/c2a7e79923210d3e78b4e0c33256f47cf7bfed2d/assets/img/clipboard-image-37.png)
+
+Optional component 200 installs the Edwin portrait shown above. The portrait is the same artwork displayed on **The Artisan's Corner** for The Artisan's Kitpack and is credited to **The Artisan / TheArtisanBG**.
+
+The release provides standard Enhanced Edition L/M/S portrait sizes as 24-bit BMP files and installs both Edwin naming sets:
+
+- BG:EE / BG1-style: `EDWINL`, `EDWINM`, `EDWINS`
+- BG2:EE / BG2-style: `NEDWINL`, `NEDWINM`, `NEDWINS`
+
+This makes the component compatible with BG:EE, BG2:EE and both portions of EET. It requires no CRE edit, so it also replaces Edwin's portrait in existing saves. The standard portrait resrefs and L/M/S sizes work with both the vanilla Enhanced Edition UI and Infinity UI++ without a UI-specific portrait patch.
 
 ## Components
 
@@ -26,6 +39,13 @@ The main design change is deliberate: the Red Wizard keeps the normal Conjurer p
 - Does **not** modify, replace, clone or redirect `MISC89.ITM` or any other Edwin item.
 
 For reliable testing of component 100, start a new game or use a save made before Edwin has been instantiated/recruited.
+
+### 200 — Install alternate portrait for Edwin
+- Independent optional component; component 0/100 is not required.
+- Installs the supplied portrait in standard EE Large/Medium/Small sizes: 210×330, 169×266 and 54×84.
+- Installs both `EDWIN*` and `NEDWIN*` portrait names for BG:EE, BG2:EE and EET compatibility.
+- Uses ordinary game portrait resrefs, so no `UI.MENU` patch is needed for either vanilla UI or Infinity UI++.
+- Works with existing saves because the portrait resources themselves are overridden rather than changing Edwin's CRE portrait fields.
 
 ## Technical change: additional prohibited school
 
@@ -75,9 +95,9 @@ A separate cosmetic issue where class names expose strings such as `{K=0,C=1}` i
 
 ## Validation status
 
-`v1.0.0` is the first stable release. It promotes the fully validated `v0.1.0-beta1` code without gameplay changes.
+`v1.1.0` adds only the optional Edwin portrait component to the fully validated `v1.0.0` gameplay implementation. Components 0 and 100 are unchanged apart from the mod version string.
 
-Validation completed before the stable release includes:
+Validation completed for the gameplay components includes:
 
 - real WeiDU 249.00 installation on a heavily modded EET setup with components 0 and 100;
 - zero installer errors and zero warnings in the validated installation;
@@ -96,7 +116,7 @@ Supported games:
 - Baldur's Gate II: Enhanced Edition
 - Enhanced Edition Trilogy (EET)
 
-Do not install together with **The Artisan's Kitpack NPC component #5102 — Red Wizard Mage Kit for Edwin**. The installer explicitly forbids that combination.
+Do not install together with **The Artisan's Kitpack NPC component #5102 — Red Wizard Mage Kit for Edwin**. The installer explicitly forbids that combination for components 0/100.
 
 The package uses the exact project-reference **WeiDU 249.00** executable supplied for this mod. `ADD_KIT_EX` v0.6.3 requires WeiDU 247 or later.
 
@@ -104,17 +124,18 @@ The package uses the exact project-reference **WeiDU 249.00** executable supplie
 
 1. Extract the release archive directly into the game directory.
 2. Run `Setup-RedWizardKIT.exe`.
-3. Install component 0.
+3. Install component 0 for the playable Red Wizard kit.
 4. Optionally install component 100 to apply the kit to Edwin.
+5. Optionally install component 200 to replace Edwin's portrait.
 
-> **Source checkout note:** install from a GitHub Release rather than directly from a source checkout. Release packaging restores the pinned `ADD_KIT_EX` dependency and the binary projectile, then adds the project-reference WeiDU 249.00 executable. Release archives are self-contained.
+> **Source checkout note:** install from a GitHub Release rather than directly from a source checkout. Release packaging restores the pinned `ADD_KIT_EX` dependency, the binary projectile and the portrait files, then adds the project-reference WeiDU 249.00 executable. Release archives are self-contained.
 
 ## Credits
 
-- **The Artisan / [TheArtisanBG](https://github.com/TheArtisanBG)** — original Red Wizard design, implementation and binary assets from [The Artisan's Kitpack](https://github.com/TheArtisanBG/The-Artisan-s-Kitpack).
+- **The Artisan / [TheArtisanBG](https://github.com/TheArtisanBG)** — original Red Wizard design, implementation and binary assets from [The Artisan's Kitpack](https://github.com/TheArtisanBG/The-Artisan-s-Kitpack), and the Edwin portrait displayed on [The Artisan's Corner](https://theartisanbg.github.io/The-Artisans-Corner/kitpack).
 - **Argent77** — `ADD_KIT_EX` (the bundled library declares itself public domain).
 - **Sauler89** — RedWizard KIT extraction, adaptation, compatibility work and requested design changes.
 
 ## Attribution and redistribution note
 
-RedWizard KIT is a derivative adaptation of the Red Wizard material from The Artisan's Kitpack. The upstream repository reports no repository-level license for those original assets. The original work is explicitly credited above; this repository does not claim ownership of The Artisan's original Red Wizard content.
+RedWizard KIT is a derivative adaptation of the Red Wizard material from The Artisan's Kitpack. The upstream repository reports no repository-level license for those original assets. The original work, including the Edwin portrait used by component 200, is explicitly credited above; this repository does not claim ownership of The Artisan's original content.
