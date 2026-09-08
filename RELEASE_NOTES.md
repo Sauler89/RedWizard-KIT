@@ -1,22 +1,25 @@
-# RedWizard KIT v0.1.0-alpha5
+# RedWizard KIT v0.1.0-alpha6
 
-This alpha is based on the first real EET installation test of RedWizard KIT.
+This alpha follows a runtime-save audit of both a level-31 player-created Red Wizard and Edwin in a real heavily modded EET game.
 
 ## What changed
-- Both components installed successfully in the supplied EET setup with **zero WeiDU errors and zero warnings**.
-- Fixed the Edwin amulet logic introduced in alpha4.
-- The original Artisan component replaces `MISC89.ITM` with a custom 546-byte amulet containing nine opcode 42 effects for the Red Wizard's extra wizard spell slots.
-- RedWizard KIT already provides those extra slots intrinsically through `S9RWSLOT.SPL`, so component 100 now leaves Edwin's currently installed amulet completely untouched.
-- Removed the `S9RWAMU.ITM` clone, opcode-42 deletion and CRE item redirection entirely.
-- Component 100 now only assigns `S9REDWIZ` to Edwin's supported CRE variants.
-- Edwin still keeps Illusion spells and scripted Mirror Image.
+- Fixed the raw `<SCHOOLTOKEN>` placeholder shown during specialist spell selection when SCS/SFO's externalized spell UI is installed.
+- RedWizard KIT now registers a localized custom `dwKitSpecLearnLine` for `S9REDWIZ` through SCS's own extension point when that system is detected.
+- The fix is display-only: it does not alter spell availability, specialist restrictions or the underlying spell-selection rules.
 
-## Core design
-- Playable Red Wizard (Conjurer) for CHARNAME.
-- Optional Edwin component.
-- Normal Conjurer prohibition on Divination is preserved.
-- The additional Illusion prohibition is removed.
-- Enhanced Specialization, Spell Power, Specialist Defense and +1 extra wizard spell slot per spell level are preserved.
+## Runtime validation
+- CHARNAME is correctly assigned `S9REDWIZ`.
+- Illusion remains available while the normal Conjurer Divination prohibition is preserved.
+- Level-31 CHARNAME has the normal specialist spell-slot progression and the separate intrinsic Red Wizard +1 slot for spell levels 1-9.
+- Specialist Defense is present with the exact intended stack: +2 base vs Conjuration plus five +1 increments, for **+7 vs Conjuration at level 16+**.
+- Spell Power is present at +5 caster levels at level 31.
+- The repeating Enhanced Specialization aura is present.
+- Edwin is correctly assigned `S9REDWIZ`.
+- Edwin keeps `MISC89`, his native BG2 amulet slot bonuses, and separately receives the Red Wizard intrinsic slot bonus.
+- Edwin retains the Illusion spells that the original Artisan component removed, including memorized Illusion spells.
+
+## Known external UI issue
+A class-name artifact such as `{K=0,C=1}` can be exposed by the interaction between SCS's class/kit signalling system and Infinity UI++. This is a known external UI-filtering issue and is intentionally not patched by RedWizard KIT.
 
 ## Compatibility
 BG:EE, BG2:EE and EET.
@@ -30,6 +33,3 @@ https://github.com/TheArtisanBG/The-Artisan-s-Kitpack
 `ADD_KIT_EX` is by Argent77.
 
 RedWizard KIT extraction, adaptation and compatibility work: **Sauler89**.
-
-## Testing status
-The WeiDU installation has now passed on a heavily modded EET installation. In-game CHARNAME/Edwin behavior should still be verified before promoting the project out of alpha status.
