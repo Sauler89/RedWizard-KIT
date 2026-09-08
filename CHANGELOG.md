@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.1.0-alpha6
+- Audited a real level-31 Red Wizard `.CHR` and Edwin directly from a supplied `BALDUR.gam` save.
+- Confirmed CHARNAME has the normal specialist spell-slot progression plus the separate nine-level `S9RWSLOT` Red Wizard bonus.
+- Confirmed Specialist Defense is applied exactly as designed: one +2 Conjuration save effect from `S9RWBASE` plus five +1 `S9RWDEF` effects, for +7 vs Conjuration at level 16+.
+- Confirmed level-31 Spell Power is present as opcode 191 with value +5 and the Enhanced Specialization repeating aura is present.
+- Confirmed Edwin is assigned `S9REDWIZ`, keeps `MISC89`, keeps his native BG2 amulet slot bonuses, and separately receives the Red Wizard slot bonus.
+- Confirmed Edwin retains all seven Illusion spells removed by the original Artisan component, including memorized Illusion spells.
+- Fixed the raw `<SCHOOLTOKEN>` text shown by SCS/SFO's externalized spell UI for the custom Red Wizard kit by registering a localized `dwKitSpecLearnLine` entry when that system is installed.
+- The known `{K=...,C=...}` class-name artifact from SCS + Infinity UI++ is external to RedWizard KIT and is intentionally not patched here.
+
 ## v0.1.0-alpha5
 - Audited the first real EET installation DEBUG: both components installed successfully with zero WeiDU errors and zero warnings.
 - Identified a logic flaw in alpha4's Edwin amulet de-stacking code.
