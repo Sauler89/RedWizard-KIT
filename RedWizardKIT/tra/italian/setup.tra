@@ -1,0 +1,23 @@
+@0 = ~Mago Rosso (Evocatore)~
+@1 = ~mago rosso~
+@2 = ~MAGO ROSSO: I Maghi Rossi sono i signori del Thay, conquistatori dei Rashemi nativi di quella terra e aspiranti dominatori magici del Faerûn. Si concentrano su una scuola di magia più intensamente di qualunque altro specialista, raggiungendo una padronanza straordinaria della magia entro un ambito molto ristretto. Considerati tiranni crudeli e malvagi in tutto Toril, alcuni scelgono di lasciare la propria regione, assumere identità segrete e praticare la magia senza doversi preoccupare di alleanze politiche e possibili rivolte di schiavi.
+
+Vantaggi:
+– Specializzazione potenziata: diventando Mago Rosso, il personaggio intensifica la propria dedizione all'Evocazione, ottenendo vari bonus legati a questa scuola.
+– Tutti i nemici entro 9 metri dal Mago Rosso subiscono una penalità di -4 ai Tiri Salvezza contro gli incantesimi di Evocazione provenienti da qualsiasi fonte, al posto del normale modificatore dello specialista agli incantesimi da lui lanciati.
+– Può memorizzare un incantesimo aggiuntivo per livello, oltre al bonus ottenuto dalla specializzazione.
+– Potere magico: gli incantesimi arcani del Mago Rosso vengono lanciati come se il suo livello dell'incantatore fosse superiore di 1. Il bonus aumenta di +1 al 3°, 6°, 9° e 12° livello.
+– Difesa dello specialista: il Mago Rosso ottiene un ulteriore bonus di +1 ai Tiri Salvezza contro gli incantesimi di Evocazione. Il bonus aumenta di +1 al 4°, 8°, 12° e 16° livello.
+
+Svantaggi:
+– Deve avere un allineamento non buono.
+– In quanto Evocatore, non può apprendere né lanciare incantesimi di Divinazione.
+
+Nota: a differenza dell'implementazione originale dell'Artisan's Kitpack per Edwin, questa versione non impone Illusione come scuola proibita aggiuntiva.~
+@3 = ~MAGO ROSSO: Un Evocatore del Thay altamente specializzato. Questa versione mantiene la Specializzazione potenziata ma non impone Illusione come scuola proibita aggiuntiva.~
+@4 = ~RedWizard KIT: kit Mago Rosso (Evocatore)~
+@5 = ~RedWizard KIT: assegna il kit Mago Rosso a Edwin~
+@6 = ~Questo componente richiede BG:EE, BG2:EE oppure EET.~
+@7 = ~Il componente Mago Rosso per Edwin (#5102) dell'Artisan's Kitpack originale è già installato. Non installare entrambe le implementazioni.~
+@8 = ~Devi prima installare il componente principale del kit Mago Rosso di RedWizard KIT.~
+@9 = ~Per verificare correttamente Edwin, inizia una nuova partita oppure usa un salvataggio precedente alla sua prima generazione o al suo reclutamento.~
